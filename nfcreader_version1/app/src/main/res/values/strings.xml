@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Image Uploader</string>
+    <string name="select_image">Select Image</string>
+    <string name="send_to_esp32">Upload to ESP32</string>
+    <string name="dither_strength">Dither Strength</string>
+    <string name="scale_image">Scale Image</string>
+    <string name="image_upload_success">Image uploaded successfully!</string>
+    <string name="image_upload_failed">Image upload failed</string>
+    <string name="select_image_first">Please select an image first</string>
+    <string name="image_loaded">Image loaded, please adjust parameters</string>
+    <string name="image_processing_complete">Image processing complete</string>
+    <string name="image_processing_failed">Image processing failed</string>
+    <string name="uploading_image">Uploading image to ESP32...</string>
+    <string name="upload_failed">Upload failed</string>
+    <string name="image_size_error">Image size error</string>
+    <string name="expected_size">Expected 128x296, got</string>
+    <string name="esp32_ip_address">ESP32 IP Address</string>
+    <string name="enter_esp32_ip">Enter ESP32 IP address</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="permission_message">This app needs storage and camera permissions to work properly. Please enable these permissions in settings.</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="cancel">Cancel</string>
+</resources> 
