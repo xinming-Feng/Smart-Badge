@@ -87,4 +87,19 @@ lint/tmp/
 
 # Temporary files
 *.tmp
-*.temp 
+*.temp
+
+# Built application files - keep only release APK
+*.apk
+!smart-badge-*.apk
+*.ap_
+*.aab
+
+# Decompiled sources (temporary)
+decompiled_source/
+
+# Architecture diagrams (generated)
+app_architecture_diagram.*
+english_app_workflow.png
+simple_app_workflow.png
+app_architecture_mermaid.md 

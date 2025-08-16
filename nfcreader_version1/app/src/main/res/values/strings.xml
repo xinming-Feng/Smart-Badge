@@ -21,4 +21,39 @@
     <string name="permission_message">This app needs storage and camera permissions to work properly. Please enable these permissions in settings.</string>
     <string name="go_to_settings">Go to Settings</string>
     <string name="cancel">Cancel</string>
+    
+    <!-- GitHub Upload and NFC Write strings -->
+    <string name="update_to_github">Upload to GitHub</string>
+    <string name="write_nfc">Write NFC</string>
+    <string name="select_process_image_first">Please select and process an image first</string>
+    <string name="uploading_to_github">Uploading to GitHub...</string>
+    <string name="upload_successful">Upload successful</string>
+    <string name="upload_successful_url_saved">Upload successful, Raw image URL saved</string>
+    <string name="upload_failed_with_error">Upload failed with error</string>
+    <string name="upload_image_github_first">Please upload an image to GitHub first</string>
+    
+    <!-- NFC related strings -->
+    <string name="nfc_not_supported">This device does not support NFC</string>
+    <string name="please_enable_nfc">Please enable NFC</string>
+    <string name="bring_nfc_tag_close">Please bring NFC tag close to phone...</string>
+    <string name="nfc_write_successful">NFC write successful</string>
+    <string name="nfc_write_failed">NFC write failed</string>
+    <string name="ndef_write_failed">NDEF write failed</string>
+    <string name="nfc_format_write_successful">NFC format and write successful</string>
+    <string name="nfc_format_failed">NFC format failed</string>
+    <string name="format_failed">Format failed</string>
+    <string name="nfc_tag_no_ndef">NFC tag does not support NDEF</string>
+    <string name="nfc_operation_exception">NFC operation exception</string>
+    
+    <!-- Missing error strings -->
+    <string name="image_preview_not_found">Image preview not found</string>
+    <string name="btn_select_image_not_found">Select image button not found</string>
+    <string name="btn_upload_github_not_found">Upload GitHub button not found</string>
+    <string name="btn_write_nfc_not_found">Write NFC button not found</string>
+    <string name="seek_bar_dither_not_found">Dither seek bar not found</string>
+    <string name="seek_bar_scale_not_found">Scale seek bar not found</string>
+    <string name="tv_status_not_found">Status text view not found</string>
+    <string name="upload_image_message">Upload image</string>
+    <string name="github_upload_failed_status">GitHub upload failed with status</string>
+    <string name="github_upload_failed">GitHub upload failed</string>
 </resources> 
