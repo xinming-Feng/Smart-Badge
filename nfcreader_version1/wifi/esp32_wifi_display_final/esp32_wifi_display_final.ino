@@ -1,19 +1,19 @@
 #include <WiFi.h>
-#include <WebServer.h>
 #include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_PN532.h>
+#include <HTTPClient.h>
+#include <WiFiClientSecure.h>
 
 // WiFi配置
-const char* ssid = "HUAWEI-T1EGY7";
-const char* password = "ZXCVBNM123456";
+const char* ssid = "UCL_IoT";
+const char* password = "NhEXQPQzue";
 
 // 静态IP配置
 IPAddress staticIP(192, 168, 3, 159);
 IPAddress gateway(192, 168, 3, 1);
 IPAddress subnet(255, 255, 255, 0);
 IPAddress dns(223, 5, 5, 5);
-
-// 服务器
-WebServer server(80);
 
 // 2.9寸墨水屏引脚定义
 #define PIN_SPI_SCK  13
@@ -26,7 +26,16 @@ WebServer server(80);
 // 图像缓冲区
 #define IMAGE_SIZE 4736
 uint8_t imageBuffer[IMAGE_SIZE];
-int uploadOffset = 0;
+
+// PN532 I2C引脚定义（ESP32默认SDA=21, SCL=22）
+#define PN532_SDA 21
+#define PN532_SCL 22
+// 正确的ESP32 I2C初始化方式
+Adafruit_PN532 nfc(PN532_SDA, PN532_SCL);
+
+String nfcUrl = "";
+String lastNfcUrl = "";
+bool tagPresent = false;
 
 // 基础函数
 void EPD_Reset() {
@@ -135,95 +144,51 @@ void EPD_initSPI() {
     SPI.setFrequency(4000000); // 4MHz
 }
 
-// 处理根页面
-void handleRoot() {
-    server.send(200, "text/html", "<h1>ESP32 WiFi Display</h1><p>Use the Android App to upload images</p>");
-}
-
-// 处理图片上传
-void handleUpload() {
-    Serial.print("Bytes received: ");
-    Serial.println(uploadOffset);
-    if (uploadOffset == IMAGE_SIZE) {
-        Serial.println("Starting display update...");
-        
-        // 分析接收到的数据
-        int blackPixels = 0, whitePixels = 0;
-        for (int i = 0; i < IMAGE_SIZE; i++) {
-            if (imageBuffer[i] == 0x00) blackPixels++;
-            else if (imageBuffer[i] == 0xFF) whitePixels++;
-        }
-        Serial.printf("Data analysis - Black: %d, White: %d, Other: %d\n", 
-                      blackPixels, whitePixels, IMAGE_SIZE - blackPixels - whitePixels);
-        
-        // 使用V2初始化序列
+void displayImageFromBuffer(uint8_t* buffer, size_t len) {
+    if (len != IMAGE_SIZE) {
+        Serial.println("图片数据长度错误");
+        return;
+    }
         EPD_Init_2in9_V2();
-        
-        // 发送反转的图像数据（解决黑白相反问题）
-        Serial.println("Sending inverted image data...");
         for (int i = 0; i < IMAGE_SIZE; i++) {
-            EPD_SendData(~imageBuffer[i]);  // 反转所有位
-        }
-        
-        // 刷新显示
-        Serial.println("Refreshing display...");
-        EPD_2IN9_V2_Show();
-        
-        Serial.println("Display update completed");
-        server.send(200, "text/plain", "Image received and displayed!");
-    } else {
-        Serial.print("Expected 4736 bytes, got ");
-        Serial.println(uploadOffset);
-        server.send(400, "text/plain", "Invalid data size");
+        EPD_SendData(~buffer[i]); // 反转显示
     }
-    uploadOffset = 0; // 重置
-}
-
-// 处理上传数据
-void uploadHandler() {
-    HTTPUpload& upload = server.upload();
-    if (upload.status == UPLOAD_FILE_START) {
-        Serial.println("UPLOAD_FILE_START");
-        uploadOffset = 0;
-    } else if (upload.status == UPLOAD_FILE_WRITE) {
-        Serial.print("UPLOAD_FILE_WRITE, size: ");
-        Serial.println(upload.currentSize);
-        int len = upload.currentSize;
-        if (upload.buf != nullptr && len > 0 && uploadOffset < IMAGE_SIZE) {
-            int copyLen = len;
-            if (uploadOffset + copyLen > IMAGE_SIZE) {
-                copyLen = IMAGE_SIZE - uploadOffset;
-            }
-            memcpy(&imageBuffer[uploadOffset], upload.buf, copyLen);
-            uploadOffset += copyLen;
-        }
-    } else if (upload.status == UPLOAD_FILE_END) {
-        Serial.println("UPLOAD_FILE_END");
-    }
-}
-
-// 测试显示 - 显示清晰的测试图案
-void handleTest() {
-    Serial.println("Testing display with clear pattern...");
-    
-    // 使用V2初始化序列
-    EPD_Init_2in9_V2();
-    
-    // 发送清晰的测试图案（上半部分白色，下半部分黑色）
-    Serial.println("Sending test pattern...");
-    for (int i = 0; i < IMAGE_SIZE; i++) {
-        if (i < IMAGE_SIZE / 2) {
-            EPD_SendData(0xFF);  // 上半部分白色
-        } else {
-            EPD_SendData(0x00);  // 下半部分黑色
-        }
-    }
-    
-    // 刷新显示
     EPD_2IN9_V2_Show();
-    
-    Serial.println("Test pattern displayed");
-    server.send(200, "text/plain", "Test pattern displayed");
+    Serial.println("图片显示完成");
+}
+
+void downloadAndDisplayImage(String url) {
+    Serial.print("开始下载图片: ");
+    Serial.println(url);
+
+    WiFiClientSecure client;
+    client.setInsecure(); // 跳过证书校验
+
+    HTTPClient http;
+    http.begin(client, url); // 用带 client 的 begin
+    int httpCode = http.GET();
+    if (httpCode == 200) {
+        WiFiClient* stream = http.getStreamPtr();
+        size_t total = 0;
+        while (stream->available() && total < IMAGE_SIZE) {
+            int n = stream->read(&imageBuffer[total], IMAGE_SIZE - total);
+            if (n <= 0) break;
+            total += n;
+        }
+        if (total == IMAGE_SIZE) {
+            Serial.println("图片下载成功，开始显示");
+            displayImageFromBuffer(imageBuffer, IMAGE_SIZE);
+        } else {
+            Serial.print("图片下载不完整，已接收字节: ");
+            Serial.println(total);
+        }
+    } else {
+        Serial.print("HTTP下载失败，状态码: ");
+        Serial.println(httpCode);
+        Serial.print("错误信息: ");
+        Serial.println(http.errorToString(httpCode));
+    }
+    http.end();
 }
 
 void setup() {
@@ -236,9 +201,9 @@ void setup() {
     EPD_initSPI();
     
     // 配置静态IP
-    if (WiFi.config(staticIP, gateway, subnet, dns, dns) == false) {
-        Serial.println("Static IP configuration failed.");
-    }
+    // if (WiFi.config(staticIP, gateway, subnet, dns, dns) == false) {
+    //     Serial.println("Static IP configuration failed.");
+    // }
     
     // 连接WiFi
     WiFi.begin(ssid, password);
@@ -252,17 +217,330 @@ void setup() {
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
     
-    // 设置服务器路由
-    server.on("/", HTTP_GET, handleRoot);
-    server.on("/upload", HTTP_POST, handleUpload, uploadHandler);
-    server.on("/test", HTTP_GET, handleTest);
+    // 初始化PN532
+    Wire.begin(PN532_SDA, PN532_SCL);
+    nfc.begin();
+    uint32_t versiondata = nfc.getFirmwareVersion();
+    if (!versiondata) {
+        Serial.println("Didn't find PN53x board");
+        while (1); // halt
+    }
+    nfc.SAMConfig();
+    Serial.println("PN532 NFC初始化完成");
+}
+
+// 新增：解析NDEF URL记录
+String parseNdefUrl(uint8_t* ndefData, uint32_t ndefLen) {
+    if (ndefLen < 4) return "";
     
-    // 启动服务器
-    server.begin();
-    Serial.println("HTTP server started");
-    Serial.println("Ready to receive images!");
+    Serial.print("开始解析NDEF数据，长度: ");
+    Serial.println(ndefLen);
+    
+    // 打印完整的NDEF数据用于调试
+    Serial.print("完整NDEF数据: ");
+    for (int i = 0; i < ndefLen; i++) {
+        Serial.print(ndefData[i], HEX);
+        Serial.print(" ");
+    }
+    Serial.println();
+    
+    // 查找NDEF记录的开始位置
+    uint32_t offset = 0;
+    
+    // 跳过可能的填充字节，查找NDEF记录
+    while (offset < ndefLen && ndefData[offset] == 0) {
+        offset++;
+    }
+    
+    if (offset >= ndefLen) {
+        Serial.println("未找到有效的NDEF数据");
+        return "";
+    }
+    
+    Serial.print("NDEF记录开始位置: ");
+    Serial.println(offset);
+    
+    // 读取NDEF记录
+    while (offset < ndefLen) {
+        if (offset + 4 > ndefLen) {
+            Serial.println("数据长度不足，退出解析");
+            break;
+        }
+        
+        uint8_t tnf = ndefData[offset] & 0x07;
+        uint8_t typeLength = ndefData[offset + 1];
+        uint8_t payloadLength = ndefData[offset + 2];
+        
+        Serial.print("TNF: 0x");
+        Serial.print(tnf, HEX);
+        Serial.print(", 类型长度: ");
+        Serial.print(typeLength);
+        Serial.print(", 载荷长度: ");
+        Serial.println(payloadLength);
+        
+        if (offset + 3 + typeLength + payloadLength > ndefLen) {
+            Serial.println("数据长度不足，退出解析");
+            break;
+        }
+        
+        // 检查是否是URL记录
+        if (tnf == 0x01 && typeLength == 1 && ndefData[offset + 3] == 'U') {
+            Serial.println("找到URL记录");
+            // 找到URL记录，解析payload
+            uint8_t* payload = &ndefData[offset + 3 + typeLength];
+            
+            // URL记录的第一个字节是前缀标识符
+            uint8_t prefix = payload[0];
+            String url = "";
+            
+            Serial.print("URL前缀: 0x");
+            Serial.println(prefix, HEX);
+            
+            // 根据前缀添加协议
+            switch (prefix) {
+                case 0x01: url = "http://www."; break;
+                case 0x02: url = "https://www."; break;
+                case 0x03: url = "http://"; break;
+                case 0x04: url = "https://"; break;
+                default: url = ""; break;
+            }
+            
+            // 添加URL内容
+            for (int i = 1; i < payloadLength; i++) {
+                url += (char)payload[i];
+            }
+            
+            Serial.print("解析到URL: ");
+            Serial.println(url);
+            return url;
+        } else {
+            Serial.print("不是URL记录，类型: ");
+            if (typeLength > 0) {
+                Serial.print((char)ndefData[offset + 3]);
+            }
+            Serial.println();
+        }
+        
+        offset += 3 + typeLength + payloadLength;
+    }
+    
+    // 如果标准解析失败，尝试直接解析URL
+    Serial.println("尝试直接解析URL...");
+    String rawData = "";
+    for (int i = 0; i < ndefLen; i++) {
+        if (ndefData[i] >= 32 && ndefData[i] <= 126) { // 可打印字符
+            rawData += (char)ndefData[i];
+        }
+    }
+    
+    Serial.print("原始数据: ");
+    Serial.println(rawData);
+    
+    // 查找URL模式并清理
+    if (rawData.indexOf("raw.githubusercontent.com") >= 0) {
+        // 移除开头的"QU"（NDEF标识符）
+        String cleanUrl = rawData;
+        if (cleanUrl.startsWith("QU")) {
+            cleanUrl = cleanUrl.substring(2);
+        }
+        
+        // 移除结尾的多余字符
+        while (cleanUrl.length() > 0 && 
+               (cleanUrl.charAt(cleanUrl.length() - 1) < 32 || 
+                cleanUrl.charAt(cleanUrl.length() - 1) > 126)) {
+            cleanUrl = cleanUrl.substring(0, cleanUrl.length() - 1);
+        }
+        
+        // 查找完整的URL路径
+        int comPos = cleanUrl.indexOf(".com");
+        if (comPos > 0) {
+            // 查找.bin结尾
+            int binPos = cleanUrl.indexOf(".bin");
+            if (binPos > comPos) {
+                // 找到完整的URL，包括.bin文件
+                String url = "https://" + cleanUrl.substring(0, binPos + 4);
+                Serial.print("清理后的URL: ");
+                Serial.println(url);
+                return url;
+            } else {
+                // 只找到.com，尝试查找其他可能的结尾
+                int slashPos = cleanUrl.indexOf("/", comPos);
+                if (slashPos > 0) {
+                    // 查找最后一个斜杠后的内容
+                    int lastSlash = cleanUrl.lastIndexOf("/");
+                    if (lastSlash > slashPos) {
+                        String url = "https://" + cleanUrl.substring(0, lastSlash + 1);
+                        Serial.print("部分URL: ");
+                        Serial.println(url);
+                        return url;
+                    }
+                }
+                
+                // 如果都找不到，至少返回.com部分
+                String url = "https://" + cleanUrl.substring(0, comPos + 4);
+                Serial.print("基础URL: ");
+                Serial.println(url);
+                return url;
+            }
+        }
+    }
+    
+    Serial.println("未找到URL记录");
+    return "";
 }
 
 void loop() {
-    server.handleClient();
+    // 检测NFC标签
+    uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };
+    uint8_t uidLength;
+    
+    boolean success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength);
+    
+    if (success) {
+        if (!tagPresent) {
+            Serial.println("检测到NFC标签");
+            Serial.print("UID: ");
+            for (int i = 0; i < uidLength; i++) {
+                Serial.print(uid[i], HEX);
+                Serial.print(" ");
+            }
+            Serial.println();
+            tagPresent = true;
+        }
+        
+        // 对于NTAG标签，直接读取NDEF数据页面
+        if (uidLength == 7) { // NTAG213/215/216
+            // 只在第一次检测到标签时读取数据，避免重复读取
+            static bool dataRead = false;
+            if (!dataRead) {
+                uint8_t ndefBuf[256];
+                
+                // 读取NDEF起始页（通常是第4页）
+                success = nfc.ntag2xx_ReadPage(4, ndefBuf);
+                if (success) {
+                    // 解析NDEF TLV结构
+                    uint8_t tlvType = ndefBuf[0];
+                    uint8_t tlvLength = ndefBuf[1];
+                    
+                    Serial.print("TLV类型: 0x");
+                    Serial.print(tlvType, HEX);
+                    Serial.print(", 长度: ");
+                    Serial.println(tlvLength);
+                    
+                    if (tlvType == 0x03) { // NDEF TLV
+                        // 读取NDEF数据
+                        uint8_t ndefData[256];
+                        uint32_t dataLen = 0;
+                        
+                        // 计算需要读取的页面数量
+                        int startPage = 5;
+                        int endPage = startPage + (tlvLength + 3) / 4; // 向上取整
+                        
+                        Serial.print("读取页面范围: ");
+                        Serial.print(startPage);
+                        Serial.print(" 到 ");
+                        Serial.println(endPage - 1);
+                        
+                        // 从第5页开始读取NDEF数据
+                        for (int page = startPage; page < endPage; page++) {
+                            uint8_t pageData[4];
+                            if (nfc.ntag2xx_ReadPage(page, pageData)) {
+                                Serial.print("页面 ");
+                                Serial.print(page);
+                                Serial.print(": ");
+                                for (int i = 0; i < 4; i++) {
+                                    Serial.print(pageData[i], HEX);
+                                    Serial.print(" ");
+                                }
+                                Serial.println();
+                                
+                                // 计算当前页面应该读取的字节数
+                                int bytesToRead = 4;
+                                if (page == endPage - 1) {
+                                    // 最后一页，只读取需要的字节数
+                                    bytesToRead = tlvLength - (dataLen);
+                                }
+                                
+                                for (int i = 0; i < bytesToRead && dataLen < tlvLength; i++) {
+                                    ndefData[dataLen++] = pageData[i];
+                                }
+                            } else {
+                                Serial.print("读取页面 ");
+                                Serial.print(page);
+                                Serial.println(" 失败，尝试重试...");
+                                // 重试一次
+                                delay(100);
+                                if (nfc.ntag2xx_ReadPage(page, pageData)) {
+                                    Serial.print("重试成功，页面 ");
+                                    Serial.print(page);
+                                    Serial.print(": ");
+                                    for (int i = 0; i < 4; i++) {
+                                        Serial.print(pageData[i], HEX);
+                                        Serial.print(" ");
+                                    }
+                                    Serial.println();
+                                    
+                                    int bytesToRead = 4;
+                                    if (page == endPage - 1) {
+                                        bytesToRead = tlvLength - (dataLen);
+                                    }
+                                    
+                                    for (int i = 0; i < bytesToRead && dataLen < tlvLength; i++) {
+                                        ndefData[dataLen++] = pageData[i];
+                                    }
+                                } else {
+                                    Serial.print("重试失败，跳过页面 ");
+                                    Serial.println(page);
+                                    // 继续读取下一页，不中断
+                                }
+                            }
+                        }
+                        
+                        Serial.print("NDEF数据长度: ");
+                        Serial.println(dataLen);
+                        
+                        // 打印NDEF数据的十六进制
+                        Serial.print("NDEF数据: ");
+                        for (int i = 0; i < (dataLen < 32 ? dataLen : 32); i++) { // 只打印前32字节
+                            Serial.print(ndefData[i], HEX);
+                            Serial.print(" ");
+                        }
+                        Serial.println();
+                        
+                        // 解析NDEF URL
+                        String url = parseNdefUrl(ndefData, dataLen);
+                        if (url.length() > 0 && url != lastNfcUrl) {
+                            lastNfcUrl = url;
+                            nfcUrl = url;
+                            Serial.print("NFC读取到新URL: ");
+                            Serial.println(nfcUrl);
+                            
+                            // 下载并显示图片
+                            downloadAndDisplayImage(nfcUrl);
+                        } else if (url.length() == 0) {
+                            Serial.println("未能解析出URL");
+                        }
+                        
+                        dataRead = true; // 标记已读取
+                    } else {
+                        Serial.println("未找到NDEF TLV");
+                    }
+                } else {
+                    Serial.println("读取NDEF起始页失败");
+                }
+            }
+        } else {
+            Serial.println("不支持的标签类型");
+        }
+    } else {
+        if (tagPresent) {
+            Serial.println("NFC标签已离开");
+            tagPresent = false;
+            // 重置数据读取标志，为下次读取做准备
+            static bool dataRead = false;
+            dataRead = false;
+        }
+    }
+    
+    delay(1000); // 每秒检测一次
 } 

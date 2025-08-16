@@ -6,105 +6,155 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="26"
-8-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml
 9        android:targetSdkVersion="34" />
-9-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml
 10
 11    <uses-permission android:name="android.permission.CAMERA" />
-11-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:5:5-65
-11-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:5:22-62
+11-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:4:5-65
+11-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:4:22-62
 12    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-12-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:6:5-80
-12-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:6:22-77
+12-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:5:5-80
+12-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:5:22-77
 13    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-13-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:7:5-81
-13-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:7:22-78
+13-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:6:5-81
+13-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:6:22-78
 14    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-14-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:8:5-76
-14-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:8:22-73
+14-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:7:5-76
+14-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:7:22-73
 15    <uses-permission android:name="android.permission.INTERNET" />
-15-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:9:5-67
-15-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:9:22-64
-16
-17    <uses-feature
-17-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:11:5-85
-18        android:name="android.hardware.camera"
-18-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:11:19-57
-19        android:required="false" />
-19-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:11:58-82
-20
-21    <permission
-21-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/ec4f76f6c0c02de8ba18086e7bd9baf5/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
-22        android:name="com.example.nfcreader.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-22-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/ec4f76f6c0c02de8ba18086e7bd9baf5/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
-23        android:protectionLevel="signature" />
-23-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/ec4f76f6c0c02de8ba18086e7bd9baf5/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+15-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:8:5-67
+15-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:8:22-64
+16    <uses-permission android:name="android.permission.NFC" />
+16-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:9:5-62
+16-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:9:22-59
+17
+18    <uses-feature
+18-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:11:5-85
+19        android:name="android.hardware.camera"
+19-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:11:19-57
+20        android:required="false" />
+20-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:11:58-82
+21    <uses-feature
+21-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:12:5-81
+22        android:name="android.hardware.nfc"
+22-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:12:19-54
+23        android:required="true" />
+23-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:12:55-78
 24
-25    <uses-permission android:name="com.example.nfcreader.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-25-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/ec4f76f6c0c02de8ba18086e7bd9baf5/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
-25-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/ec4f76f6c0c02de8ba18086e7bd9baf5/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
-26
-27    <application
-27-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:13:5-32:19
-28        android:allowBackup="true"
-28-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:15:9-35
-29        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-29-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/ec4f76f6c0c02de8ba18086e7bd9baf5/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
-30        android:debuggable="true"
-31        android:extractNativeLibs="false"
-32        android:icon="@mipmap/ic_launcher"
-32-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:16:9-43
-33        android:label="@string/app_name"
-33-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:17:9-41
-34        android:networkSecurityConfig="@xml/network_security_config"
-34-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:14:9-69
-35        android:roundIcon="@mipmap/ic_launcher_round"
-35-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:18:9-54
-36        android:supportsRtl="true"
-36-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:19:9-35
-37        android:theme="@style/Theme.ImageUploader" >
-37-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:20:9-51
-38        <activity
-38-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:22:9-30:20
-39            android:name="com.example.nfcreader.MainActivity"
-39-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:23:13-41
-40            android:exported="true"
-40-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:24:13-36
-41            android:launchMode="singleTop" >
-41-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:25:13-43
-42            <intent-filter>
-42-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:26:13-29:29
-43                <action android:name="android.intent.action.MAIN" />
-43-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:27:17-69
-43-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:27:25-66
-44
-45                <category android:name="android.intent.category.LAUNCHER" />
-45-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:28:17-77
-45-->/Users/xmf/Desktop/nfcreader/app/src/main/AndroidManifest.xml:28:27-74
-46            </intent-filter>
-47        </activity>
+25    <permission
+25-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/69031d9de34e6ae4e80492f7a424b6d1/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+26        android:name="com.example.nfcreader.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+26-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/69031d9de34e6ae4e80492f7a424b6d1/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+27        android:protectionLevel="signature" />
+27-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/69031d9de34e6ae4e80492f7a424b6d1/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+28
+29    <uses-permission android:name="com.example.nfcreader.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+29-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/69031d9de34e6ae4e80492f7a424b6d1/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+29-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/69031d9de34e6ae4e80492f7a424b6d1/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+30
+31    <application
+31-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:14:5-54:19
+32        android:allowBackup="true"
+32-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:16:9-35
+33        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+33-->[androidx.core:core:1.9.0] /Users/xmf/.gradle/caches/transforms-3/69031d9de34e6ae4e80492f7a424b6d1/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+34        android:debuggable="true"
+35        android:extractNativeLibs="false"
+36        android:icon="@mipmap/ic_launcher"
+36-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:17:9-43
+37        android:label="@string/app_name"
+37-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:18:9-41
+38        android:networkSecurityConfig="@xml/network_security_config"
+38-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:15:9-69
+39        android:roundIcon="@mipmap/ic_launcher_round"
+39-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:19:9-54
+40        android:supportsRtl="true"
+40-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:20:9-35
+41        android:theme="@style/Theme.ImageUploader" >
+41-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:21:9-51
+42        <activity
+42-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:23:9-52:20
+43            android:name="com.example.nfcreader.MainActivity"
+43-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:24:13-41
+44            android:exported="true"
+44-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:25:13-36
+45            android:launchMode="singleTop" >
+45-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:26:13-43
+46            <intent-filter>
+46-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:27:13-30:29
+47                <action android:name="android.intent.action.MAIN" />
+47-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:28:17-69
+47-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:28:25-66
 48
-49        <provider
-49-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/27ea2d1fe40306b6a6ebc7514e2ae640/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-50            android:name="androidx.startup.InitializationProvider"
-50-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/27ea2d1fe40306b6a6ebc7514e2ae640/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
-51            android:authorities="com.example.nfcreader.androidx-startup"
-51-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/27ea2d1fe40306b6a6ebc7514e2ae640/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
-52            android:exported="false" >
-52-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/27ea2d1fe40306b6a6ebc7514e2ae640/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
-53            <meta-data
-53-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/27ea2d1fe40306b6a6ebc7514e2ae640/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-54                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-54-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/27ea2d1fe40306b6a6ebc7514e2ae640/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
-55                android:value="androidx.startup" />
-55-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/27ea2d1fe40306b6a6ebc7514e2ae640/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
-56            <meta-data
-56-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/xmf/.gradle/caches/transforms-3/1d1173f99a1313055c26367e9296308a/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
-57                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-57-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/xmf/.gradle/caches/transforms-3/1d1173f99a1313055c26367e9296308a/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
-58                android:value="androidx.startup" />
-58-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/xmf/.gradle/caches/transforms-3/1d1173f99a1313055c26367e9296308a/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
-59        </provider>
-60    </application>
-61
-62</manifest>
+49                <category android:name="android.intent.category.LAUNCHER" />
+49-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:29:17-77
+49-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:29:27-74
+50            </intent-filter>
+51
+52            <!-- NFC Intent Filters -->
+53            <intent-filter>
+53-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:33:13-37:29
+54                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+54-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:34:17-77
+54-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:34:25-74
+55
+56                <category android:name="android.intent.category.DEFAULT" />
+56-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:35:17-76
+56-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:35:27-73
+57
+58                <data android:mimeType="text/plain" />
+58-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:36:17-55
+58-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:36:23-52
+59            </intent-filter>
+60            <intent-filter>
+60-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:39:13-42:29
+61                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+61-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:40:17-76
+61-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:40:25-73
+62
+63                <category android:name="android.intent.category.DEFAULT" />
+63-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:35:17-76
+63-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:35:27-73
+64            </intent-filter>
+65            <intent-filter>
+65-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:44:13-47:29
+66                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+66-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:45:17-77
+66-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:45:25-74
+67
+68                <category android:name="android.intent.category.DEFAULT" />
+68-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:35:17-76
+68-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:35:27-73
+69            </intent-filter>
+70
+71            <meta-data
+71-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:49:13-51:59
+72                android:name="android.nfc.action.TECH_DISCOVERED"
+72-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:50:17-66
+73                android:resource="@xml/nfc_tech_filter" />
+73-->/Users/xmf/Desktop/Smart-Badge/nfcreader_version1/app/src/main/AndroidManifest.xml:51:17-56
+74        </activity>
+75
+76        <provider
+76-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/d121cbb831bfcedee4bd4dacef3ca9b6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+77            android:name="androidx.startup.InitializationProvider"
+77-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/d121cbb831bfcedee4bd4dacef3ca9b6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+78            android:authorities="com.example.nfcreader.androidx-startup"
+78-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/d121cbb831bfcedee4bd4dacef3ca9b6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+79            android:exported="false" >
+79-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/d121cbb831bfcedee4bd4dacef3ca9b6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+80            <meta-data
+80-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/d121cbb831bfcedee4bd4dacef3ca9b6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+81                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+81-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/d121cbb831bfcedee4bd4dacef3ca9b6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+82                android:value="androidx.startup" />
+82-->[androidx.emoji2:emoji2:1.2.0] /Users/xmf/.gradle/caches/transforms-3/d121cbb831bfcedee4bd4dacef3ca9b6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+83            <meta-data
+83-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/xmf/.gradle/caches/transforms-3/09eebfef02b068e8648c27b44a779134/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+84                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+84-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/xmf/.gradle/caches/transforms-3/09eebfef02b068e8648c27b44a779134/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+85                android:value="androidx.startup" />
+85-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/xmf/.gradle/caches/transforms-3/09eebfef02b068e8648c27b44a779134/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+86        </provider>
+87    </application>
+88
+89</manifest>
