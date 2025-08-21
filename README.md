@@ -7,7 +7,7 @@ Design of a Smart Badge Integrating NFC Communication and E-ink Display for Digi
 
 ## 🎯 Project Overview
 
-This project presents a comprehensive smart badge solution that enables seamless image transmission from mobile devices to e-ink displays via NFC technology. The system is designed to foster digital empathy and enhance communication among organizational members through visual feedback mechanisms.
+This project presents a comprehensive smart badge solution that enables seamless image transmission from mobile devices to e-ink displays via NFC technology. The system is designed to foster digital empathy and enhance communication among organizational members through visual and Vibration feedback mechanisms.
 
 ![a9fa6791bef7bf54e322c5aeee878bbb](https://github.com/user-attachments/assets/ef0208fe-748b-4b5d-aafe-ac90f2e971cb)
 
@@ -152,6 +152,8 @@ nfcreader_version1/
 - **NFC Reception**: PN532 library integration
 - **Display Control**: E-ink display driver implementation
 - **Image Processing**: Bitmap handling and display formatting
+- **Distance calculation in BLE mode**:Distance detection is performed by converting RSSI into distance
+- **Multimodal feedback**:Feedback from both visual and tactile ways
 - **Power Management**: Sleep modes and energy optimization
 
 
