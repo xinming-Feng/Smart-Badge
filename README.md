@@ -1,9 +1,16 @@
 # Smart Badge Project
 Design of a Smart Badge Integrating NFC Communication and E-ink Display for Digital Image Transmission and Multimodal Feedback
 
+![01e39359a6a9f986adc8404c1c26038e](https://github.com/user-attachments/assets/bad92ba2-c0bf-440f-9fdb-a88e37561213)
+
+
+
 ## 🎯 Project Overview
 
 This project presents a comprehensive smart badge solution that enables seamless image transmission from mobile devices to e-ink displays via NFC technology. The system is designed to foster digital empathy and enhance communication among organizational members through visual feedback mechanisms.
+
+![a9fa6791bef7bf54e322c5aeee878bbb](https://github.com/user-attachments/assets/ef0208fe-748b-4b5d-aafe-ac90f2e971cb)
+
 
 ## 🏗️ System Architecture
 
@@ -16,28 +23,29 @@ The Smart Badge project consists of two main components:
 - **Real-time Preview**: Live image processing preview with adjustable parameters
 
 ### ⚡ Hardware Components
-- **ESP32 Development Board**: Main microcontroller for NFC reception and display control
-- **PN532 NFC Module**: Handles NFC data reception from mobile devices
-- **2.9-inch E-ink Display**: High-contrast monochrome display (296x128 pixels)
-- **Supporting Electronics**: Power management and connection interfaces
+- **ESP32 Development Board**
+- **PN532 NFC Module**
+- **2.9-inch E-ink Display**
+- **NeoPixel**
+- **Vibration Motor Module**
 
 ## ✨ Key Features
 
 ### Mobile Application Features
-- 📸 **Image Selection**: Gallery and camera integration
-- 🎨 **Advanced Image Processing**: 
+- **Image Selection**: Gallery and camera integration
+- **Advanced Image Processing**: 
   - Floyd-Steinberg dithering algorithm
   - Adjustable dithering intensity (0-100%)
   - Real-time image scaling and preview
-- 📡 **NFC Integration**: 
+-  **NFC Integration**: 
   - Automatic NFC adapter detection
   - NDEF URI record writing
   - Support for all NFC tag types
-- ☁️ **Cloud Storage**: 
+- **Cloud Storage**: 
   - Automatic GitHub repository upload
   - Raw URL generation for hardware access
   - Secure API token management
-- 🖥️ **User Interface**:
+- **User Interface**:
   - Intuitive parameter adjustment controls
   - Real-time processing feedback
   - Status notifications and error handling
@@ -46,7 +54,6 @@ The Smart Badge project consists of two main components:
 - 🔄 **NFC Reception**: Automatic detection and processing of NFC tags
 - 📺 **E-ink Display**: Optimized for high-contrast image rendering
 - 🔋 **Power Efficiency**: Low-power design suitable for battery operation
-- 🌐 **Connectivity**: WiFi capabilities for extended functionality
 
 ## 🛠️ Technical Specifications
 
@@ -62,19 +69,14 @@ The Smart Badge project consists of two main components:
   - Android SDK 33
 
 ### Hardware Requirements
-- **Microcontroller**: ESP32 (WiFi + Bluetooth capable)
-- **NFC Module**: PN532 (I2C/SPI interface)
-- **Display**: 2.9" E-ink display (296x128 pixels)
+- **Microcontroller**: Waveshare E-Paper ESP32 Driver Board
+- **NFC Module**: PN532 NFC Module V3
+- **Display**: Waveshare 2.9-inch e-Paper
 - **Power Supply**: 3.3V regulated power
-- **Memory**: Minimum 4MB flash, 520KB RAM
+- **NeoPixel**:NeoPixel Stick with 8 led beads
+- **Vibration Motor Module**
+- **NFC tags**
 
-### Image Processing Specifications
-- **Input Formats**: JPEG, PNG, BMP
-- **Output Format**: 1-bit monochrome PNG
-- **Maximum Input Size**: 1024x1024 pixels
-- **Target Output Size**: 296x128 pixels (e-ink optimized)
-- **Processing Algorithm**: Floyd-Steinberg error diffusion dithering
-- **Compression**: PNG with optimized palette
 
 ## 🚀 Getting Started
 
@@ -96,7 +98,7 @@ The Smart Badge project consists of two main components:
    ```
 
 2. **Method 2: Direct Installation**
-   - Download `smart-badge-v1.2-signed.apk` on Release
+   - Download the latest release on Releases
    - Enable "Unknown Sources" on your Android device
    - Install the APK file
 
@@ -121,6 +123,9 @@ The Smart Badge project consists of two main components:
 4. **Cloud Upload**: Automatic GitHub repository upload
 5. **NFC Writing**: Write image URL to NFC tag
 6. **Hardware Display**: ESP32 receives NFC data and displays image
+   
+   ![e8fcbfe3c9267e0b11e0bf58a116f986](https://github.com/user-attachments/assets/0bfd4926-b941-4762-aacc-50f9f8ea3fb4)
+
 
 ## 🔧 Development and Customization
 
@@ -149,33 +154,6 @@ nfcreader_version1/
 - **Image Processing**: Bitmap handling and display formatting
 - **Power Management**: Sleep modes and energy optimization
 
-## 🎨 Image Processing Pipeline
-
-1. **Input Validation**: Format and size verification
-2. **Grayscale Conversion**: RGB to luminance transformation
-3. **Floyd-Steinberg Dithering**: Error diffusion algorithm
-4. **Scaling**: Adaptive resizing for e-ink display
-5. **Compression**: PNG optimization for NFC transmission
-6. **Quality Assurance**: Output validation and error handling
-
-## 🔍 Advanced Features
-
-### Dithering Algorithm Details
-- **Error Diffusion Pattern**:
-  ```
-      X   7/16
-  3/16 5/16 1/16
-  ```
-- **Adjustable Intensity**: 0-100% error propagation control
-- **Real-time Processing**: Optimized for mobile performance
-- **Quality Optimization**: Balanced speed vs. quality algorithms
-
-### NFC Communication Protocol
-- **Data Format**: NDEF URI records
-- **Payload**: GitHub raw URL pointing to processed image
-- **Compatibility**: Universal NFC tag support
-- **Error Handling**: Retry mechanisms and status feedback
-
 
 
 ## 📄 Requirements and Dependencies
@@ -198,25 +176,20 @@ numpy>=1.21.0
 - Adafruit display libraries
 - SPI/I2C communication protocols
 
+  
+## 🎬 Demo for usage
+https://www.youtube.com/watch?v=YsoVYDEWGc0
+
+## 🛠️ Enclosures
+The Enclosures folder displays the models and information for the enclosures.
+
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🤝 Contributing
-
-welcome contributions to the Smart Badge project! Please read our contributing guidelines and submit pull requests for any improvements.
 
 ## 📧 Support
 
 For technical support, bug reports, or feature requests, please open an issue on our GitHub repository.
 
-## 🏆 Acknowledgments
 
-- Floyd-Steinberg dithering algorithm implementation
-- Android NFC development community
-- ESP32 and Arduino ecosystem contributors
-- E-ink display technology providers
-
----
-
-**Project Status**: Active Development | **Version**: 1.0 | **Last Updated**: 2024
