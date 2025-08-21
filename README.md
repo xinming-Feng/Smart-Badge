@@ -96,30 +96,18 @@ The Smart Badge project consists of two main components:
    ```
 
 2. **Method 2: Direct Installation**
-   - Download `smart-badge-v1.0-signed.apk`
+   - Download `smart-badge-v1.2-signed.apk` on Release
    - Enable "Unknown Sources" on your Android device
    - Install the APK file
 
 #### Hardware Setup
-1. **Wiring Connections**:
-   ```
-   ESP32    PN532
-   3.3V  -> VCC
-   GND   -> GND
-   D5    -> CS
-   D2    -> IRQ
-   D3    -> RST
-   D23   -> MOSI
-   D19   -> MISO
-   D18   -> SCK
-   ```
 
-2. **Library Installation**:
+1. **Library Installation**:
    - PN532 Library
    - Adafruit GFX Library
    - Adafruit EPD Library
 
-3. **Code Upload**:
+2. **Code Upload**:
    - Open Arduino IDE
    - Load the hardware sketch
    - Select ESP32 board and correct port
@@ -188,13 +176,6 @@ nfcreader_version1/
 - **Compatibility**: Universal NFC tag support
 - **Error Handling**: Retry mechanisms and status feedback
 
-
-## 📊 Performance Metrics
-
-- **Image Processing Time**: < 3 seconds for 512x512 images
-- **NFC Write Speed**: < 1 second for typical payloads
-- **Memory Usage**: < 50MB RAM during processing
-- **Battery Impact**: Minimal with optimized algorithms
 
 
 ## 📄 Requirements and Dependencies
