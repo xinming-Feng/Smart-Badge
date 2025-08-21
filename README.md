@@ -96,30 +96,18 @@ The Smart Badge project consists of two main components:
    ```
 
 2. **Method 2: Direct Installation**
-   - Download `smart-badge-v1.0-signed.apk`
+   - Download `smart-badge-v1.2-signed.apk` on Release
    - Enable "Unknown Sources" on your Android device
    - Install the APK file
 
 #### Hardware Setup
-1. **Wiring Connections**:
-   ```
-   ESP32    PN532
-   3.3V  -> VCC
-   GND   -> GND
-   D5    -> CS
-   D2    -> IRQ
-   D3    -> RST
-   D23   -> MOSI
-   D19   -> MISO
-   D18   -> SCK
-   ```
 
-2. **Library Installation**:
+1. **Library Installation**:
    - PN532 Library
    - Adafruit GFX Library
    - Adafruit EPD Library
 
-3. **Code Upload**:
+2. **Code Upload**:
    - Open Arduino IDE
    - Load the hardware sketch
    - Select ESP32 board and correct port
@@ -188,39 +176,7 @@ nfcreader_version1/
 - **Compatibility**: Universal NFC tag support
 - **Error Handling**: Retry mechanisms and status feedback
 
-## 🐛 Troubleshooting
 
-### Common Issues
-- **NFC Not Working**: Verify device compatibility and permissions
-- **Image Processing Slow**: Reduce image size or lower dithering intensity
-- **Upload Failures**: Check network connectivity and GitHub token
-- **Hardware Unresponsive**: Verify wiring and power supply
-
-### Debug Information
-- **Android**: Logcat output with detailed error messages
-- **Hardware**: Serial monitor output (115200 baud rate)
-- **Network**: HTTP response codes and error handling
-
-## 📊 Performance Metrics
-
-- **Image Processing Time**: < 3 seconds for 512x512 images
-- **NFC Write Speed**: < 1 second for typical payloads
-- **Memory Usage**: < 50MB RAM during processing
-- **Battery Impact**: Minimal with optimized algorithms
-
-## 🔮 Future Enhancements
-
-### Planned Features
-- **Multiple Dithering Algorithms**: Jarvis-Judice-Ninke, Stucki
-- **Batch Processing**: Multiple image support
-- **Advanced Filters**: Contrast, brightness, gamma correction
-- **Wireless Alternatives**: Bluetooth and WiFi transmission options
-
-### Hardware Expansions
-- **Larger Displays**: Support for various e-ink sizes
-- **Color Displays**: RGB e-ink compatibility
-- **Local Storage**: SD card integration for offline operation
-- **Sensor Integration**: Environmental data display
 
 ## 📄 Requirements and Dependencies
 
@@ -248,7 +204,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🤝 Contributing
 
-We welcome contributions to the Smart Badge project! Please read our contributing guidelines and submit pull requests for any improvements.
+welcome contributions to the Smart Badge project! Please read our contributing guidelines and submit pull requests for any improvements.
 
 ## 📧 Support
 
