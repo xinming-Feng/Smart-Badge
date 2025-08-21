@@ -188,18 +188,6 @@ nfcreader_version1/
 - **Compatibility**: Universal NFC tag support
 - **Error Handling**: Retry mechanisms and status feedback
 
-## 🐛 Troubleshooting
-
-### Common Issues
-- **NFC Not Working**: Verify device compatibility and permissions
-- **Image Processing Slow**: Reduce image size or lower dithering intensity
-- **Upload Failures**: Check network connectivity and GitHub token
-- **Hardware Unresponsive**: Verify wiring and power supply
-
-### Debug Information
-- **Android**: Logcat output with detailed error messages
-- **Hardware**: Serial monitor output (115200 baud rate)
-- **Network**: HTTP response codes and error handling
 
 ## 📊 Performance Metrics
 
@@ -208,19 +196,6 @@ nfcreader_version1/
 - **Memory Usage**: < 50MB RAM during processing
 - **Battery Impact**: Minimal with optimized algorithms
 
-## 🔮 Future Enhancements
-
-### Planned Features
-- **Multiple Dithering Algorithms**: Jarvis-Judice-Ninke, Stucki
-- **Batch Processing**: Multiple image support
-- **Advanced Filters**: Contrast, brightness, gamma correction
-- **Wireless Alternatives**: Bluetooth and WiFi transmission options
-
-### Hardware Expansions
-- **Larger Displays**: Support for various e-ink sizes
-- **Color Displays**: RGB e-ink compatibility
-- **Local Storage**: SD card integration for offline operation
-- **Sensor Integration**: Environmental data display
 
 ## 📄 Requirements and Dependencies
 
@@ -248,7 +223,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🤝 Contributing
 
-We welcome contributions to the Smart Badge project! Please read our contributing guidelines and submit pull requests for any improvements.
+welcome contributions to the Smart Badge project! Please read our contributing guidelines and submit pull requests for any improvements.
 
 ## 📧 Support
 
