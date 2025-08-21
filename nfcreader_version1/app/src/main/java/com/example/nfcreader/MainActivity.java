@@ -379,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
         URL url = new URL(apiUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
-        conn.setRequestProperty("Authorization", "token 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");
+        conn.setRequestProperty("Authorization", "token YOUR_GITHUB_TOKEN_HERE");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
         OutputStream os = conn.getOutputStream();
