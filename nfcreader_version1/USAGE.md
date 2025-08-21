@@ -1,36 +1,36 @@
-# NFC图像上传器使用说明
+# NFC Image Uploader User Guide
 
-## 项目概述
+## Project Overview
 
-这是一个完整的NFC图像传输解决方案，包含：
-- **Android应用**：选择、处理并发送图像到NFC芯片
-- **硬件端代码**：接收NFC图像数据并显示到2.9英寸水墨屏
+This is a complete NFC image transmission solution that includes:
+- **Android Application**: Select, process, and send images to NFC chip
+- **Hardware Code**: Receive NFC image data and display on 2.9-inch e-ink screen
 
-## 快速开始
+## Quick Start
 
-### 1. Android应用安装
+### 1. Android Application Installation
 
-#### 方法一：使用Android Studio
-1. 打开Android Studio
-2. 选择"Open an existing project"
-3. 选择项目根目录
-4. 连接支持NFC的Android设备
-5. 点击运行按钮
+#### Method 1: Using Android Studio
+1. Open Android Studio
+2. Select "Open an existing project"
+3. Select the project root directory
+4. Connect an NFC-enabled Android device
+5. Click the run button
 
-#### 方法二：直接安装APK
-1. 在Android设备上启用"未知来源"安装
-2. 将生成的APK文件传输到设备
-3. 安装APK文件
+#### Method 2: Direct APK Installation
+1. Enable "Unknown Sources" installation on Android device
+2. Transfer the generated APK file to the device
+3. Install the APK file
 
-### 2. 硬件端设置
+### 2. Hardware Setup
 
-#### 所需硬件
-- ESP32开发板
-- PN532 NFC模块
-- 2.9英寸水墨屏（可选）
-- 连接线
+#### Required Hardware
+- ESP32 development board
+- PN532 NFC module
+- 2.9-inch e-ink screen (optional)
+- Connection wires
 
-#### 接线方式
+#### Wiring Diagram
 ```
 ESP32    PN532
 3.3V  -> VCC
@@ -43,135 +43,135 @@ D19   -> MISO
 D18   -> SCK
 ```
 
-#### 上传代码
-1. 打开Arduino IDE
-2. 安装必要的库：
+#### Code Upload
+1. Open Arduino IDE
+2. Install necessary libraries:
    - PN532
    - Adafruit GFX Library
    - Adafruit EPD Library
-3. 打开`hardware/simple_nfc_receiver.ino`
-4. 选择正确的开发板和端口
-5. 上传代码
+3. Open `hardware/simple_nfc_receiver.ino`
+4. Select the correct board and port
+5. Upload the code
 
-## 使用步骤
+## Usage Steps
 
-### 1. 启动应用
-- 打开NFC图像上传器应用
-- 确保设备NFC功能已启用
-- 授予相机和存储权限
+### 1. Launch Application
+- Open the NFC Image Uploader application
+- Ensure the device's NFC function is enabled
+- Grant camera and storage permissions
 
-### 2. 选择图片
-- 点击"选择图片"按钮
-- 从图库选择要处理的图片
-- 应用会自动加载并显示预览
+### 2. Select Image
+- Click the "Select Image" button
+- Choose an image from the gallery to process
+- The application will automatically load and display a preview
 
-### 3. 调整参数
-- **抖动强度**：控制黑白转换的效果
-  - 0-30：低抖动，适合简单图像
-  - 30-70：中等抖动，适合大多数图像
-  - 70-100：高抖动，适合复杂图像
-- **缩放图像**：调整图像大小
-  - 0-50：缩小图像
-  - 50-100：放大图像
+### 3. Adjust Parameters
+- **Dithering Intensity**: Controls the black and white conversion effect
+  - 0-30: Low dithering, suitable for simple images
+  - 30-70: Medium dithering, suitable for most images
+  - 70-100: High dithering, suitable for complex images
+- **Scale Image**: Adjust image size
+  - 0-50: Reduce image size
+  - 50-100: Enlarge image size
 
-### 4. 发送到NFC
-- 点击"发送到NFC"按钮
-- 将手机靠近NFC芯片
-- 等待传输完成提示
+### 4. Send to NFC
+- Click the "Send to NFC" button
+- Bring your phone close to the NFC chip
+- Wait for transmission completion notification
 
-## 技术细节
+## Technical Details
 
-### 抖动算法
-使用Floyd-Steinberg抖动算法，将彩色图像转换为高质量黑白图像：
+### Dithering Algorithm
+Uses the Floyd-Steinberg dithering algorithm to convert color images to high-quality black and white images:
 
 ```
-误差扩散模式：
+Error diffusion pattern:
     X   7/16
 3/16 5/16 1/16
 ```
 
-### NFC数据格式
-- **MIME类型**：image/png
-- **数据格式**：PNG压缩图像
-- **最大大小**：4KB（硬件端限制）
+### NFC Data Format
+- **MIME Type**: image/png
+- **Data Format**: PNG compressed image
+- **Maximum Size**: 4KB (hardware limitation)
 
-### 图像处理流程
-1. 加载原始图像
-2. 转换为灰度图
-3. 应用抖动算法
-4. 缩放到目标尺寸
-5. 压缩为PNG格式
-6. 通过NFC发送
+### Image Processing Pipeline
+1. Load original image
+2. Convert to grayscale
+3. Apply dithering algorithm
+4. Scale to target dimensions
+5. Compress to PNG format
+6. Send via NFC
 
-## 故障排除
+## Troubleshooting
 
-### 常见问题
+### Common Issues
 
-#### 1. NFC不可用
-- 检查设备是否支持NFC
-- 确保NFC功能已启用
-- 重启应用
+#### 1. NFC Unavailable
+- Check if the device supports NFC
+- Ensure NFC function is enabled
+- Restart the application
 
-#### 2. 图像发送失败
-- 确保NFC芯片在有效范围内
-- 检查芯片是否支持NDEF格式
-- 尝试减小图像大小
+#### 2. Image Sending Failed
+- Ensure the NFC chip is within effective range
+- Check if the chip supports NDEF format
+- Try reducing image size
 
-#### 3. 图像处理缓慢
-- 选择较小的原始图像
-- 降低抖动强度
-- 关闭其他应用释放内存
+#### 3. Slow Image Processing
+- Select smaller original images
+- Reduce dithering intensity
+- Close other applications to free memory
 
-#### 4. 硬件端无响应
-- 检查接线是否正确
-- 确认PN532模块工作正常
-- 查看串口监视器输出
+#### 4. Hardware Unresponsive
+- Check if wiring is correct
+- Confirm PN532 module is working properly
+- Check serial monitor output
 
-### 调试信息
+### Debug Information
 
-#### Android端
-- 查看Logcat输出
-- 检查权限状态
-- 验证NFC适配器状态
+#### Android Side
+- Check Logcat output
+- Verify permission status
+- Validate NFC adapter status
 
-#### 硬件端
-- 打开串口监视器（115200波特率）
-- 查看接收状态信息
-- 检查数据完整性
+#### Hardware Side
+- Open serial monitor (115200 baud rate)
+- Check reception status information
+- Verify data integrity
 
-## 性能优化
+## Performance Optimization
 
-### 图像大小建议
-- **原始图像**：不超过1024x1024像素
-- **处理后图像**：适配2.9英寸屏幕（296x128像素）
-- **文件大小**：不超过2KB
+### Image Size Recommendations
+- **Original Image**: No more than 1024x1024 pixels
+- **Processed Image**: Adapted for 2.9-inch screen (296x128 pixels)
+- **File Size**: No more than 2KB
 
-### 处理速度优化
-- 使用较小的预览图像
-- 在后台线程处理图像
-- 及时释放Bitmap资源
+### Processing Speed Optimization
+- Use smaller preview images
+- Process images in background threads
+- Release Bitmap resources promptly
 
-## 扩展功能
+## Extended Features
 
-### 可能的改进
-1. **多种抖动算法**：添加Jarvis-Judice-Ninke等算法
-2. **图像裁剪**：添加触摸裁剪功能
-3. **批量传输**：支持多张图片连续传输
-4. **传输进度**：显示实时传输进度
-5. **图像滤镜**：添加对比度、亮度调节
+### Possible Improvements
+1. **Multiple Dithering Algorithms**: Add algorithms like Jarvis-Judice-Ninke
+2. **Image Cropping**: Add touch cropping functionality
+3. **Batch Transmission**: Support continuous transmission of multiple images
+4. **Transmission Progress**: Display real-time transmission progress
+5. **Image Filters**: Add contrast and brightness adjustment
 
-### 硬件扩展
-1. **更大存储**：支持更大图像文件
-2. **多种屏幕**：支持不同尺寸水墨屏
-3. **无线传输**：添加WiFi/蓝牙传输选项
-4. **本地存储**：保存接收的图像到SD卡
+### Hardware Extensions
+1. **Larger Storage**: Support for larger image files
+2. **Multiple Screens**: Support different sizes of e-ink screens
+3. **Wireless Transmission**: Add WiFi/Bluetooth transmission options
+4. **Local Storage**: Save received images to SD card
 
-## 技术支持
+## Technical Support
 
-如果遇到问题，请检查：
-1. 设备兼容性
-2. 权限设置
-3. NFC功能状态
-4. 硬件连接
+If you encounter problems, please check:
+1. Device compatibility
+2. Permission settings
+3. NFC function status
+4. Hardware connections
 
-更多技术细节请参考代码注释和README文档。 
+For more technical details, please refer to code comments and README documentation. 

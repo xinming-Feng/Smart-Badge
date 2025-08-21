@@ -1,81 +1,81 @@
-# NFC图像上传器
+# NFC Image Uploader
 
-一个简单的Android应用，可以将图片通过NFC传输到2.9英寸水墨屏显示。
+A simple Android application that can transmit images via NFC to a 2.9-inch e-ink display.
 
-## 功能特性
+## Features
 
-- 📱 选择图片（从图库或相机）
-- 🎨 Floyd-Steinberg抖动算法处理
-- 📏 图像缩放功能
-- 📡 NFC数据传输
-- 👀 实时预览效果
+- 📱 Image selection (from gallery or camera)
+- 🎨 Floyd-Steinberg dithering algorithm processing
+- 📏 Image scaling functionality
+- 📡 NFC data transmission
+- 👀 Real-time preview effects
 
-## 技术实现
+## Technical Implementation
 
-### 抖动算法
-使用Floyd-Steinberg抖动算法将彩色图像转换为高质量的黑白图像，特别适合水墨屏显示。
+### Dithering Algorithm
+Uses the Floyd-Steinberg dithering algorithm to convert color images to high-quality black and white images, particularly suitable for e-ink display.
 
-### NFC通信
-- 支持NDEF格式的NFC标签
-- 自动检测NFC设备
-- 图像数据压缩传输
+### NFC Communication
+- Support for NDEF format NFC tags
+- Automatic NFC device detection
+- Compressed image data transmission
 
-### 图像处理
-- 实时灰度转换
-- 可调节抖动强度
-- 图像缩放适配屏幕
+### Image Processing
+- Real-time grayscale conversion
+- Adjustable dithering intensity
+- Image scaling to fit screen
 
-## 使用方法
+## Usage
 
-1. 启动应用
-2. 点击"选择图片"按钮选择要处理的图片
-3. 调整抖动强度和缩放参数
-4. 点击"发送到NFC"按钮
-5. 将手机靠近NFC芯片完成传输
+1. Launch the application
+2. Click the "Select Image" button to choose an image to process
+3. Adjust dithering intensity and scaling parameters
+4. Click the "Send to NFC" button
+5. Bring your phone close to the NFC chip to complete the transmission
 
-## 系统要求
+## System Requirements
 
-- Android 5.0 (API 21) 或更高版本
-- 支持NFC的Android设备
-- 相机和存储权限
+- Android 5.0 (API 21) or higher
+- NFC-enabled Android device
+- Camera and storage permissions
 
-## 开发环境
+## Development Environment
 
 - Android Studio
 - Gradle 7.4.2
 - Android SDK 33
 - Java 8
 
-## 项目结构
+## Project Structure
 
 ```
 app/
 ├── src/main/
 │   ├── java/com/example/nfcreader/
-│   │   ├── MainActivity.java          # 主活动
-│   │   └── DitherProcessor.java       # 抖动算法处理
+│   │   ├── MainActivity.java          # Main activity
+│   │   └── DitherProcessor.java       # Dithering algorithm processor
 │   ├── res/
-│   │   ├── layout/activity_main.xml   # 主界面布局
-│   │   ├── values/strings.xml         # 字符串资源
-│   │   └── xml/nfc_tech_filter.xml    # NFC技术过滤器
-│   └── AndroidManifest.xml            # 应用清单
-└── build.gradle                       # 模块构建配置
+│   │   ├── layout/activity_main.xml   # Main interface layout
+│   │   ├── values/strings.xml         # String resources
+│   │   └── xml/nfc_tech_filter.xml    # NFC technology filter
+│   └── AndroidManifest.xml            # Application manifest
+└── build.gradle                       # Module build configuration
 ```
 
-## 构建和运行
+## Build and Run
 
-1. 克隆项目到本地
-2. 在Android Studio中打开项目
-3. 连接支持NFC的Android设备
-4. 点击运行按钮
+1. Clone the project locally
+2. Open the project in Android Studio
+3. Connect an NFC-enabled Android device
+4. Click the run button
 
-## 注意事项
+## Notes
 
-- 确保设备NFC功能已启用
-- 需要相机和存储权限
-- 建议使用较小的图片以获得更好的处理效果
-- NFC传输可能需要几秒钟时间
+- Ensure the device's NFC function is enabled
+- Camera and storage permissions are required
+- It is recommended to use smaller images for better processing results
+- NFC transmission may take a few seconds
 
-## 许可证
+## License
 
 MIT License 
