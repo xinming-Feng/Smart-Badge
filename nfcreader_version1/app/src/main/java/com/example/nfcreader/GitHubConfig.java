@@ -14,7 +14,7 @@ public class GitHubConfig {
     
     // GitHub Personal Access Token for API access
     // This token has repo permissions for uploading files
-    public static final String GITHUB_TOKEN = "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";
+    public static final String GITHUB_TOKEN = "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";
     
     /**
      * Get GitHub API URL for file upload

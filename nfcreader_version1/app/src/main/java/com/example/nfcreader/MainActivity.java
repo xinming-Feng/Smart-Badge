@@ -369,24 +369,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String uploadImageToGitHub(byte[] imageBytes, String fileName) throws Exception {
+        Log.d("GitHub", "Starting GitHub upload for file: " + fileName);
         String path = "images/" + fileName;
         String apiUrl = "https://api.github.com/repos/xinming-Feng/image/contents/" + path;
+        Log.d("GitHub", "API URL: " + apiUrl);
+        
         String base64Image = Base64.encodeToString(imageBytes, 2);
+        Log.d("GitHub", "Base64 image size: " + base64Image.length());
+        
         JSONObject body = new JSONObject();
         body.put("message", getString(R.string.upload_image_message));
         body.put("content", base64Image);
         body.put("branch", "main");
+        
         URL url = new URL(apiUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
-        conn.setRequestProperty("Authorization", "token YOUR_GITHUB_TOKEN_HERE");
+        conn.setRequestProperty("Authorization", "token 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");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
+        conn.setConnectTimeout(30000); // 30 seconds timeout
+        conn.setReadTimeout(30000); // 30 seconds timeout
+        
+        Log.d("GitHub", "Sending request to GitHub API...");
         OutputStream os = conn.getOutputStream();
         os.write(body.toString().getBytes(StandardCharsets.UTF_8));
         os.flush();
         os.close();
+        
         int responseCode = conn.getResponseCode();
+        Log.d("GitHub", "Response code: " + responseCode);
         if (responseCode == 201 || responseCode == 200) {
             return "https://raw.githubusercontent.com/xinming-Feng/image/main/" + path;
         }
@@ -400,36 +412,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void uploadToGithubClicked() {
-        if (this.processedBitmap == null) {
-            Toast.makeText(this, getString(R.string.select_process_image_first), 0).show();
-            return;
-        }
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90.0f);
-        Bitmap bitmap = this.processedBitmap;
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), this.processedBitmap.getHeight(), matrix, true);
-        int width = rotatedBitmap.getWidth();
-        int height = rotatedBitmap.getHeight();
-        int[] pixels = new int[width * height];
-        rotatedBitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-        final byte[] imageData = new byte[4736];
-        for (int i = 0; i < pixels.length; i++) {
-            boolean isBlack = (pixels[i] & ViewCompat.MEASURED_SIZE_MASK) < 8421504;
-            int byteIndex = i / 8;
-            int bitIndex = 7 - (i % 8);
-            if (isBlack) {
-                imageData[byteIndex] = (byte) ((1 << bitIndex) | imageData[byteIndex]);
+        Log.d("GitHub", "Upload to GitHub clicked");
+        try {
+            if (this.processedBitmap == null) {
+                Toast.makeText(this, getString(R.string.select_process_image_first), 0).show();
+                return;
             }
-        }
-        rotatedBitmap.recycle();
-        final String fileName = "image_" + System.currentTimeMillis() + ".bin";
-        this.tvStatus.setText(getString(R.string.uploading_to_github));
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                uploadImageToGithubInBackground(imageData, fileName);
+            
+            Log.d("GitHub", "Processing bitmap for upload");
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90.0f);
+            Bitmap bitmap = this.processedBitmap;
+            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), this.processedBitmap.getHeight(), matrix, true);
+            int width = rotatedBitmap.getWidth();
+            int height = rotatedBitmap.getHeight();
+            int[] pixels = new int[width * height];
+            rotatedBitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+            final byte[] imageData = new byte[4736];
+            for (int i = 0; i < pixels.length; i++) {
+                boolean isBlack = (pixels[i] & ViewCompat.MEASURED_SIZE_MASK) < 8421504;
+                int byteIndex = i / 8;
+                int bitIndex = 7 - (i % 8);
+                if (isBlack) {
+                    imageData[byteIndex] = (byte) ((1 << bitIndex) | imageData[byteIndex]);
+                }
             }
-        }).start();
+            rotatedBitmap.recycle();
+            final String fileName = "image_" + System.currentTimeMillis() + ".bin";
+            this.tvStatus.setText(getString(R.string.uploading_to_github));
+            
+            Log.d("GitHub", "Starting background upload thread");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        uploadImageToGithubInBackground(imageData, fileName);
+                    } catch (Exception e) {
+                        Log.e("GitHub", "Exception in background thread", e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tvStatus.setText("Background thread error: " + e.getMessage());
+                                Toast.makeText(MainActivity.this, "Upload failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }
+            }).start();
+        } catch (Exception e) {
+            Log.e("GitHub", "Exception in uploadToGithubClicked", e);
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void uploadImageToGithubInBackground(byte[] imageData, String fileName) {
@@ -445,8 +478,14 @@ public class MainActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             e.printStackTrace();
-            this.tvStatus.setText(getString(R.string.upload_failed_with_error) + ": " + String.valueOf(e.getMessage()));
-            Toast.makeText(this, getString(R.string.upload_failed_with_error), 0).show();
+            final String errorMessage = e.getMessage();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tvStatus.setText(getString(R.string.upload_failed_with_error) + ": " + String.valueOf(errorMessage));
+                    Toast.makeText(MainActivity.this, getString(R.string.upload_failed_with_error), 0).show();
+                }
+            });
         }
     }
 
